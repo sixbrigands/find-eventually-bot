@@ -13,38 +13,64 @@ DigitalOut led3(LED3);
 DigitalOut led4(LED4);
 
 
-int main() {
-    wait(5); 
-    led2 = 0;
-    led3 = 0;
-    led4 = 0;
-    led1 = 1; //phase 1 //backwards
-    standby = 1; //turn motors on
-    speedA = .5f; //half speed
-    speedB = .5f;
-    Bin1 = 1;
-    Bin2 = 0;
-    Ain1 = 1;
-    Ain2 = 0;
-    wait(1);
-    led2 = 1; //phase 2 //forwards
+
+void drive(float speed) {         //go forward with a speed from 0 to 1
+    speedA = speed; 
+    speedB = speed;
     Bin1 = 0; 
     Bin2 = 1;
     Ain1 = 0;
     Ain2 = 1;
-    wait(1);
-    led2 = 1; //phase 3 turn left
-    Bin1 = 1;
+    standby = 1; //turn motors on
+  }
+
+void reverse(float speed) {        //go backwards with a speed from 0 to 1
+    speedA = speed; 
+    speedB = speed;
+    Bin1 = 1; 
     Bin2 = 0;
-    Ain1 = 0;
-    Ain2 = 1;
-    wait(1);
-    led2 = 1; //phase 4 turn right
+    Ain1 = 1;
+    Ain2 = 0;
+    standby = 1; //turn motors on
+  }
+
+void stop(float speed) {        //stop
+    standby = 0; //turn motors off
+  }
+
+void turnRight() {
+    speedA = 0.5f; //half speed for turns
+    speedB = 0.5f;
     Bin1 = 0;
     Bin2 = 1;
     Ain1 = 1;
     Ain2 = 0;
+    standby = 1; //turn motors on
+    wait(2); //give it time to turn
+    standby = 0;
+}
+
+void turnLeft() {
+    speedA = 0.5f; //half speed for turns
+    speedB = 0.5f;
+    Bin1 = 1;
+    Bin2 = 0;
+    Ain1 = 0;
+    Ain2 = 1;
+    standby = 1; //turn motors on
+    wait(2); //give it time to turn
+    standby = 0; //turn off motors
+}
+
+
+
+int main() {
+    drive(1);
     wait(1);
-    standby = 0; //stop    
+    reverse(1);
+    wait(1);
+    turnRight();
+    turnLeft();
+
     
 }
