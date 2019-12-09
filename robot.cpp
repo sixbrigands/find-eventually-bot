@@ -17,7 +17,7 @@ DigitalOut led1(LED1);
 DigitalOut led2(LED2);
 DigitalOut led3(LED3);
 DigitalOut led4(LED4);
-
+AnalogIn IFsensor(p15);
 
 
 void drive(float speed) {         //go forward with a speed from 0 to 1
@@ -74,8 +74,10 @@ int main() {
     printf("begin");
             while(1){
                 long distance = sensor.distance(CM);
-                printf("Distance %d\n\r", distance); //distance returns -1 if it can't get it
-                wait(0.1);  
+                float light = IFsensor;
+                //printf("Distance %d\n\r", distance); //distance returns -1 if it can't get it
+                printf("Light %f\n\r", light); 
+                wait(0.5);  
             }
 
     
